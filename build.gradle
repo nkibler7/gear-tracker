@@ -11,9 +11,16 @@ repositories {
 }
 
 def runeLiteVersion = '1.5.44-SNAPSHOT'
+def autoValueVersion = '1.7'
 
 dependencies {
-	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
+	compile 'com.github.ben-manes.caffeine:caffeine:2.8.0'
+	compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
+	compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
+	compile group: 'net.runelite', name:'client', version: runeLiteVersion
+
+	compile             "com.google.auto.value:auto-value-annotations:${autoValueVersion}"
+	annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
 
 	compileOnly 'org.projectlombok:lombok:1.18.4'
 	annotationProcessor 'org.projectlombok:lombok:1.18.4'
