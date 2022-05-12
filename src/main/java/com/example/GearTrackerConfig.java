@@ -14,4 +14,22 @@ public interface GearTrackerConfig extends Config {
   default String greeting() {
     return "Hello";
   }
+
+  @ConfigItem(
+      keyName = "gearCache",
+      name = "",
+      description = "",
+      hidden = true
+  )
+  default byte[] gearCache()
+  {
+    return new byte[0];
+  }
+
+  @ConfigItem(
+      keyName = "gearCache",
+      name = "",
+      description = ""
+  )
+  void gearCache(byte[] gearCache);
 }

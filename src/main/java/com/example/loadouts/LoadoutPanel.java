@@ -25,9 +25,8 @@ public final class LoadoutPanel extends JPanel {
     setSize(PANEL_SIZE);
     setPreferredSize(PANEL_SIZE);
 
-    backgroundImage = ImageUtil.getResourceStreamFromClass(getClass(), "loadout_background.png");
-    slotBackgroundImage =
-        ImageUtil.getResourceStreamFromClass(getClass(), "slot_blank_background.png");
+    backgroundImage = ImageUtil.loadImageResource(getClass(), "loadout_background.png");
+    slotBackgroundImage = ImageUtil.loadImageResource(getClass(), "slot_blank_background.png");
   }
 
   public void drawImageInSlot(BufferedImage image, GearSlot slot) {
@@ -87,10 +86,6 @@ public final class LoadoutPanel extends JPanel {
           imageBounds.width,
           imageBounds.height,
           /* observer= */ null);
-
-      // TODO: Remove debug code.
-      g.setColor(Color.RED);
-      g.drawRect(imageBounds.x, imageBounds.y, imageBounds.width, imageBounds.height);
     }
 
     private static Rectangle calculateImageBounds(BufferedImage image, Rectangle bounds) {

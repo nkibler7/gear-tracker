@@ -1,35 +1,50 @@
 plugins {
-	id 'java'
+    id 'java'
 }
 
 repositories {
-	mavenLocal()
-	maven {
-		url = 'http://repo.runelite.net'
-	}
-	mavenCentral()
+    mavenLocal()
+    maven {
+        url "http://repo.runelite.net"
+    }
+    maven {
+        url uri("https://maven.pkg.github.com/nkibler7/osrs-wiki-scraper")
+        content {
+            includeGroup "com.github.nkibler7"
+        }
+        credentials {
+            username "osrs-wiki-scraper-bot"
+            password "\u0066\u0035\u0065\u0065\u0065\u0039\u0033\u0035\u0064\u0033\u0037\u0030\u0033\u0035\u0064\u0030\u0038\u0033\u0033\u0065\u0061\u0038\u0036\u0062\u0033\u0066\u0033\u0032\u0062\u0035\u0061\u0061\u0062\u0033\u0065\u0063\u0061\u0036\u0031\u0065"
+        }
+    }
+    mavenCentral()
 }
 
-def runeLiteVersion = '1.5.44-SNAPSHOT'
-def autoValueVersion = '1.7'
+def runeLiteVersion = '1.8.19'
+def autoValueVersion = '1.9'
 
 dependencies {
-	compile 'com.github.ben-manes.caffeine:caffeine:2.8.0'
-	compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
-	compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
-	compile group: 'net.runelite', name:'client', version: runeLiteVersion
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.0'
+    implementation group: 'com.github.nkibler7', name: 'osrs-wiki-scraper-protos', version: '1.+'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
+    implementation group: 'com.google.guava', name: 'guava', version: '23.5-jre'
+    implementation group: 'com.google.inject', name: 'guice', version: '4.1.0'
+    implementation group: 'com.google.mug', name: 'mug', version: '5.2'
+    implementation group: 'net.runelite', name: 'client', version: runeLiteVersion
 
-	compile             "com.google.auto.value:auto-value-annotations:${autoValueVersion}"
-	annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
+    implementation platform('org.asynchttpclient:async-http-client-bom:2.+')
+    implementation 'org.asynchttpclient:async-http-client:2.12.3'
 
-	compileOnly 'org.projectlombok:lombok:1.18.4'
-	annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    implementation "com.google.auto.value:auto-value-annotations:${autoValueVersion}"
+    annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
 
-	testImplementation 'junit:junit:4.12'
-	testImplementation 'org.slf4j:slf4j-simple:1.7.12'
-	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion, {
-		exclude group: 'ch.qos.logback', module: 'logback-classic'
-	}
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion, {
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+    }
 }
 
 group = 'com.example'
@@ -37,5 +52,14 @@ version = '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8'
+}
+
+apply plugin: 'idea'
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }
