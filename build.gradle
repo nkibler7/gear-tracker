@@ -25,11 +25,12 @@ def autoValueVersion = '1.9'
 
 dependencies {
     implementation 'com.github.ben-manes.caffeine:caffeine:3.1.0'
-    implementation group: 'com.github.nkibler7', name: 'osrs-wiki-scraper-protos', version: '1.+'
+    implementation group: 'com.github.nkibler7', name: 'osrs-wiki-scraper-protos', version: '1.4'
     implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
     implementation group: 'com.google.guava', name: 'guava', version: '23.5-jre'
     implementation group: 'com.google.inject', name: 'guice', version: '4.1.0'
     implementation group: 'com.google.mug', name: 'mug', version: '5.2'
+    implementation group: 'com.google.re2j', name: 're2j', version: '1.6'
     implementation group: 'net.runelite', name: 'client', version: runeLiteVersion
 
     implementation platform('org.asynchttpclient:async-http-client-bom:2.+')
@@ -39,7 +40,7 @@ dependencies {
     annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion, {

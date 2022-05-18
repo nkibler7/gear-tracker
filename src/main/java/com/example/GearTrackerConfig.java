@@ -32,4 +32,21 @@ public interface GearTrackerConfig extends Config {
       description = ""
   )
   void gearCache(byte[] gearCache);
+
+  @ConfigItem(
+      keyName = "isOnSlayerTask",
+      name = "",
+      description = "",
+      hidden = true
+  )
+  default boolean isOnSlayerTask() {
+    return false;
+  }
+
+  @ConfigItem(
+      keyName = "isOnSlayerTask",
+      name = "",
+      description = ""
+  )
+  void isOnSlayerTask(boolean isOnSlayerTask);
 }

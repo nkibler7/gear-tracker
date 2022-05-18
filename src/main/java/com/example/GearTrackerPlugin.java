@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.attackstyle.AttackStyleSubscriber;
+import com.example.dps.DpsCalculator;
 import com.example.loadouts.Loadout;
 import com.example.loadouts.LoadoutSelectionListener;
 import com.example.npcs.NpcInfoCache;
@@ -20,6 +22,7 @@ import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.SpriteID;
 import net.runelite.api.events.WidgetLoaded;
+import net.runelite.api.kit.KitType;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
@@ -28,6 +31,7 @@ import net.runelite.api.widgets.WidgetSizeMode;
 import net.runelite.api.widgets.WidgetType;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
+import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.SessionOpen;
 import net.runelite.client.game.ItemManager;
@@ -49,11 +53,14 @@ public class GearTrackerPlugin extends Plugin implements LoadoutSelectionListene
   @Inject private GearCache gearCache;
   @Inject private DpsCalculator dpsCalculator;
   @Inject private NpcInfoCache npcInfoCache;
+  @Inject private AttackStyleSubscriber attackStyleSubscriber;
+  @Inject private EventBus eventBus;
 
   private GearPanel gearPanel;
 
   @Override
   protected void startUp() throws Exception {
+    eventBus.register(attackStyleSubscriber);
     npcInfoCache.fillCache();
 
     gearPanel = new GearPanel();
@@ -81,6 +88,13 @@ public class GearTrackerPlugin extends Plugin implements LoadoutSelectionListene
 
   @Subscribe
   public void onWidgetLoaded(WidgetLoaded widgetLoaded) {
+    for (KitType kitType : KitType.values()) {
+      log.info(
+          "Equipment ID worn in KitType {}: {}",
+          kitType.name(),
+          client.getLocalPlayer().getPlayerComposition().getEquipmentId(kitType));
+    }
+
     updateDpsText();
     if (widgetLoaded.getGroupId() != WidgetID.BANK_GROUP_ID) {
       return;
@@ -119,8 +133,7 @@ public class GearTrackerPlugin extends Plugin implements LoadoutSelectionListene
     for (Entry<GearSlot, GearItem> bisEntry : bisGear.entrySet()) {
       BufferedImage image = itemManager.getImage(bisEntry.getValue().id());
       gearPanel.drawImageInSlot(image, bisEntry.getKey());
-      log.info(
-          "BiS item for {} slot is: {}", bisEntry.getKey().name(), bisEntry.getValue().name());
+      log.info("BiS item for {} slot is: {}", bisEntry.getKey().name(), bisEntry.getValue().name());
     }
   }
 
