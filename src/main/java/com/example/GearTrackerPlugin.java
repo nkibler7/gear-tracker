@@ -22,7 +22,6 @@ import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.SpriteID;
 import net.runelite.api.events.WidgetLoaded;
-import net.runelite.api.kit.KitType;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
@@ -88,13 +87,6 @@ public class GearTrackerPlugin extends Plugin implements LoadoutSelectionListene
 
   @Subscribe
   public void onWidgetLoaded(WidgetLoaded widgetLoaded) {
-    for (KitType kitType : KitType.values()) {
-      log.info(
-          "Equipment ID worn in KitType {}: {}",
-          kitType.name(),
-          client.getLocalPlayer().getPlayerComposition().getEquipmentId(kitType));
-    }
-
     updateDpsText();
     if (widgetLoaded.getGroupId() != WidgetID.BANK_GROUP_ID) {
       return;
