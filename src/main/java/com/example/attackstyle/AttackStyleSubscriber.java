@@ -14,7 +14,7 @@ import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.eventbus.Subscribe;
 
 /**
- * A subscriber for changes to the user's currently selected attack style.
+ * A subscriber for changes to the player's currently selected attack style.
  *
  * <p>In addition to retaining the attack style, this class also finds and exposes the type of melee
  * bonus associated with the attack style (e.g. Slash, Crush, or Stab), if applicable.
@@ -32,8 +32,8 @@ public final class AttackStyleSubscriber {
   }
 
   /**
-   * Returns the currently selected attack style. If there is none selected (i.e. if the user is not
-   * logged in), {@link AttackStyle#OTHER} is returned.
+   * Returns the currently selected attack style. If there is none selected (i.e. if the player is
+   * not logged in), {@link AttackStyle#OTHER} is returned.
    */
   public AttackStyle getCurrentAttackStyle() {
     return currentAttackStyleWithBonus.get().getAttackStyle();
@@ -41,8 +41,8 @@ public final class AttackStyleSubscriber {
 
   /**
    * Returns the {@link MeleeBonusType} of the currently selected attack style. If either there is
-   * no attack style selected (i.e. if the user is not logged in) or if the selected style is not a
-   * melee type, then {@link MeleeBonusType#UNSPECIFIED} is returned.
+   * no attack style selected (i.e. if the player is not logged in) or if the selected style is not
+   * a melee type, then {@link MeleeBonusType#UNSPECIFIED} is returned.
    */
   public MeleeBonusType getCurrentMeleeBonusType() {
     return currentAttackStyleWithBonus.get().getMeleeBonusType();
