@@ -21,13 +21,18 @@ import static com.example.attackstyle.AttackStyleWithBonus.DEFENSIVE_UNSPECIFIED
 import static com.example.attackstyle.AttackStyleWithBonus.LONGRANGE;
 import static com.example.attackstyle.AttackStyleWithBonus.OTHER;
 import static com.example.attackstyle.AttackStyleWithBonus.RANGING;
-import static com.google.common.collect.ImmutableMap.toImmutableMap;
-import static java.util.function.Function.identity;
 
-import com.google.common.collect.ImmutableMap;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.Optional;
+import net.runelite.api.Varbits;
 
+/**
+ * The total set of unique weapon types in the game.
+ *
+ * <p>This was originally forked from the "Attack Styles" core plugin, but modified to include melee
+ * bonus types and expanded to support newer weapon types.
+ *
+ * <p>Note: This list will likely become outdated as new weapons are introduced to the game.
+ */
 enum WeaponType {
   TYPE_0(ACCURATE_CRUSH, AGGRESSIVE_CRUSH, null, DEFENSIVE_CRUSH),
   TYPE_1(ACCURATE_SLASH, AGGRESSIVE_SLASH, AGGRESSIVE_CRUSH, DEFENSIVE_SLASH),
@@ -71,24 +76,26 @@ enum WeaponType {
   TYPE_28(null, null, null, null),
   TYPE_29(ACCURATE_STAB, AGGRESSIVE_STAB, AGGRESSIVE_CRUSH, DEFENSIVE_STAB);
 
-  private static final Map<Integer, WeaponType> weaponTypes = createWeaponTypeMap();
-
   private final AttackStyleWithBonus[] attackStyles;
 
   WeaponType(AttackStyleWithBonus... attackStyles) {
     this.attackStyles = attackStyles;
   }
 
+  /** Returns the set of {@link AttackStyleWithBonus} values associated with this weapon type. */
   public AttackStyleWithBonus[] getAttackStylesWithBonuses() {
     return attackStyles;
   }
 
-  public static WeaponType getWeaponType(int id) {
-    return weaponTypes.get(id);
-  }
-
-  private static ImmutableMap<Integer, WeaponType> createWeaponTypeMap() {
-    return Arrays.stream(WeaponType.values())
-        .collect(toImmutableMap(WeaponType::ordinal, identity()));
+  /**
+   * Optionally returns the {@link WeaponType} associated with the given ID, which is a varbit keyed
+   * by {@link Varbits#EQUIPPED_WEAPON_TYPE}. If there is no weapon type associated with the given
+   * ID, {@link Optional#empty()} is returned.
+   */
+  public static Optional<WeaponType> getWeaponType(int id) {
+    if (id >= 0 && id < WeaponType.values().length) {
+      return Optional.of(WeaponType.values()[id]);
+    }
+    return Optional.empty();
   }
 }

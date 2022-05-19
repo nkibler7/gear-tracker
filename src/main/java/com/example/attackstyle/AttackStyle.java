@@ -1,5 +1,6 @@
 package com.example.attackstyle;
 
+/** The total set of attack styles available on all weapons in the game. */
 public enum AttackStyle {
   ACCURATE,
   AGGRESSIVE,

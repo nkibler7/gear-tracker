@@ -1,5 +1,9 @@
 package com.example.attackstyle;
 
+/**
+ * A combination of {@link AttackStyle} and {@link MeleeBonusType} values that represents valid
+ * combinations present on all weapon types in the game.
+ */
 public enum AttackStyleWithBonus {
   ACCURATE_SLASH(AttackStyle.ACCURATE, MeleeBonusType.SLASH),
   ACCURATE_CRUSH(AttackStyle.ACCURATE, MeleeBonusType.CRUSH),
@@ -31,10 +35,12 @@ public enum AttackStyleWithBonus {
     this.meleeBonusType = meleeBonusType;
   }
 
+  /** Returns the {@link AttackStyle} portion of this combination. */
   public AttackStyle getAttackStyle() {
     return attackStyle;
   }
 
+  /** Returns the {@link MeleeBonusType} portion of this combination. */
   public MeleeBonusType getMeleeBonusType() {
     return meleeBonusType;
   }
