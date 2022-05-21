@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.attackstyle.AttackStyleSubscriber;
 import com.example.dps.DpsCalculator;
+import com.example.equipment.BankedEquipmentSubscriber;
 import com.example.loadouts.Loadout;
 import com.example.loadouts.LoadoutSelectionListener;
 import com.example.npcs.NpcInfoCache;
@@ -53,6 +54,7 @@ public class GearTrackerPlugin extends Plugin implements LoadoutSelectionListene
   @Inject private DpsCalculator dpsCalculator;
   @Inject private NpcInfoCache npcInfoCache;
   @Inject private AttackStyleSubscriber attackStyleSubscriber;
+  @Inject private BankedEquipmentSubscriber bankedEquipmentSubscriber;
   @Inject private EventBus eventBus;
 
   private GearPanel gearPanel;
@@ -60,6 +62,7 @@ public class GearTrackerPlugin extends Plugin implements LoadoutSelectionListene
   @Override
   protected void startUp() throws Exception {
     eventBus.register(attackStyleSubscriber);
+    eventBus.register(bankedEquipmentSubscriber);
     npcInfoCache.fillCache();
 
     gearPanel = new GearPanel();

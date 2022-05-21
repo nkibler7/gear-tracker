@@ -38,7 +38,6 @@ public final class DpsCalculator {
       ItemManager itemManager,
       NpcInfoCache npcInfoCache,
       AttackStyleSubscriber attackStyleSubscriber,
-      GearTrackerConfig gearTrackerConfig,
       EffectiveLevelCalculator effectiveLevelCalculator,
       GearBonusMultiplier gearBonusMultiplier) {
     this.itemManager = itemManager;
